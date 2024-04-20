@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Countdown Timer</title>
+<link rel="stylesheet" href="countdown.css">
+</head>
+<body>
+
+<div class="container">
+  <label for="countdownInput">Enter Countdown Duration (in minutes):</label>
+  <input type="number" id="countdownInput" min="1" step="1" value="1">
+  <button onclick="startCountdown()">Start Countdown</button>
+  <button onclick="resetCountdown()">Reset Countdown</button>
+
+  <div id="countdown">
+    <div class="digit-container">
+      <span class="digit" id="days">00</span>
+      <span class="caption">Days</span>
+    </div>
+    <div class="digit-container">
+      <span class="digit" id="hours">00</span>
+      <span class="caption">Hours</span>
+    </div>
+    <div class="digit-container">
+      <span class="digit" id="minutes">00</span>
+      <span class="caption">Minutes</span>
+    </div>
+    <div class="digit-container">
+      <span class="digit" id="seconds">00</span>
+      <span class="caption">Seconds</span>
+    </div>
+  </div>
+
+  <div id="world-times">
+    <div class="time-item" id="india-time"></div>
+    <div class="time-item" id="tokyo-time"></div>
+    <div class="time-item" id="london-time"></div>
+    <div class="time-item" id="california-time"></div>
+  </div>
+</div>
+
+<script>
+let countdownInterval;
+
+function startCountdown() {
+  clearInterval(countdownInterval);
+  const durationInMinutes = document.getElementById("countdownInput").value;
+  const durationInMilliseconds = durationInMinutes * 60 * 1000;
+  const countDownDate = new Date().getTime() + durationInMilliseconds;
+  countdownInterval = setInterval(function() {
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    updateDigit("days", formatTime(days));
+    updateDigit("hours", formatTime(hours));
+    updateDigit("minutes", formatTime(minutes));
+    updateDigit("seconds", formatTime(seconds));
+
+    if (distance < 0) {
+      clearInterval(countdownInterval);
+      document.getElementById("countdown").innerHTML = "<span class='digit expired'>EXPIRED</span>";
+    }
+  }, 1000);
+}
+
+function resetCountdown() {
+  clearInterval(countdownInterval);
+  document.getElementById("countdownInput").value = "1";
+  updateDigit("days", "00"); 
+  updateDigit("hours", "00"); 
+  updateDigit("minutes", "00"); 
+  updateDigit("seconds", "00"); 
+}
+
+function formatTime(time) {
+  return time < 10 ? "0" + time : time;
+}
+
+function updateDigit(id, value) {
+  const digitElement = document.getElementById(id);
+  const currentValue = digitElement.innerText;
+  if (value !== currentValue) {
+    digitElement.innerText = value;
+    if (!digitElement.classList.contains('expired')) {
+      digitElement.style.transform = "rotateX(360deg)";
+      setTimeout(() => {
+        digitElement.style.transform = "none";
+      }, 500);
+    }
+  }
+}
+
+function updateWorldTimes() {
+  const now = new Date();
+  const indiaTime = now.toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+  const tokyoTime = now.toLocaleString("en-US", {timeZone: "Asia/Tokyo"});
+  const londonTime = now.toLocaleString("en-US", {timeZone: "Europe/London"});
+  const californiaTime = now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
+
+  document.getElementById("india-time").innerText = "India: " + indiaTime.split(", ")[1];
+  document.getElementById("tokyo-time").innerText = "Tokyo: " + tokyoTime.split(", ")[1];
+  document.getElementById("london-time").innerText = "London: " + londonTime.split(", ")[1];
+  document.getElementById("california-time").innerText = "California: " + californiaTime.split(", ")[1];
+}
+
+setInterval(updateWorldTimes, 1000);
+updateWorldTimes();
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #000;
+    color: #fff;
+  }
+
+  .container {
+    text-align: center;
+    position: relative;
+  }
+
+  input[type="number"] {
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #c21600;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+  }
+
+  button:hover {
+    background-color: #EA7B7B;
+  }
+
+  #countdown {
+    font-size: 60px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .digit-container {
+    margin: 10px;
+    text-align: center;
+  }
+
+  .digit {
+    background-color: #fff;
+    color: #000;
+    padding: 10px 20px;
+    margin: 0;
+    border-radius: 5px;
+    font-family: "Courier New", Courier, monospace;
+  }
+
+  .caption {
+    color: #fff;
+    font-size: 24px;
+  }
+
+  #world-times {
+    position: fixed;
+    bottom: 10px;
+    left: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 18px;
+    color: #000;
+    background-color: #c21700d2;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .time-item {
+    margin-bottom: 5px;
+    font-family: "Courier New", Courier, monospace;
+  }
